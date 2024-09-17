@@ -1,0 +1,8 @@
+# this file tells git what to ignore when we commit changes
+
+# do not commit imported package files
+/frontend/node_modules/
+/frontend/.next/
+
+# do not commit environment secrets
+/backend/.env*
