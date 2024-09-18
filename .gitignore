@@ -6,3 +6,4 @@
 
 # do not commit environment secrets
 /backend/.env*
+/backend/node_modules
