@@ -1,26 +1,18 @@
-// const db = require("../firebase"); // Import the initialized Firestore instance
+import { collection, doc, setDoc, getDocs } from "firebase/firestore";
+import { db } from "../firebase.js"; // Import the db instance
 
-// async function getWishList() {
-// 	const wishlistRef = db.collection("wishlist").doc("uid");
+export default async function getWishlist() {
+	const usersSnapshot = await getDocs(collection(db, "users"));
+	const wishlists = [];
 
-// 	const doc = await wishlistRef.get();
-// 	if (!doc.exists) {
-// 		console.log("No such document!");
-// 	} else {
-// 		console.log("Document data:", doc.data());
-// 	}
-// }
+	usersSnapshot.forEach((doc) => {
+		const data = doc.data();
+		wishlists.push({
+			uid: doc.id,
+			name: data.name,
+			wishlist: data.wishlist,
+		});
+	});
 
-// // export getWishList
-
-export default async function getWishlist(uid) {
-	// let data = await fetch("http://localhost:8080/?uid=" + uid);
-	// let posts = await data.json();
-	// return (
-	// 	<ul>
-	// 		{posts.map((post) => (
-	// 			<li key={post.id}>{post.title}</li>
-	// 		))}
-	// 	</ul>
-	// );
+	return wishlists;
 }

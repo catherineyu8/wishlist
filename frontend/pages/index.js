@@ -11,11 +11,12 @@ export default function Home() {
 				const response = await fetch(
 					"http://localhost:8080/get-wishlists"
 				);
-				if (!response.ok) {
-					throw new Error("Failed to fetch wishlists");
+				if (response.ok) {
+					const data = await response.json();
+					setWishlists(data);
+				} else {
+					throw new Error("Failed to fetch wishlists.");
 				}
-				const data = await response.json();
-				setWishlists(data);
 			} catch (err) {
 				setError(err.message);
 			}
@@ -38,14 +39,17 @@ export default function Home() {
 			});
 
 			if (response.ok) {
-				const result = await response.json();
+				// success code from server
+				// const result = await response.json();
 				alert("User added successfully.");
 			} else {
+				// error code from server
+
 				alert("Failed to add user.");
 			}
 		} catch (error) {
-			// TODO: do something more here other than just reporting to the user???
-			alert("Error posting request to server to add user.");
+			// network or other unexpected error
+			setError(err.message);
 		}
 	};
 
