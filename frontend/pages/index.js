@@ -1,7 +1,29 @@
-import { useState } from "react";
-import UserForm from "./components/addUserForm";
+import { useState, useEffect } from "react";
+import AddUserForm from "./components/addUserForm";
+import ViewWishlists from "./components/viewWishlists";
 
 export default function Home() {
+	const [wishlists, setWishlists] = useState([]);
+
+	useEffect(() => {
+		const fetchWishlists = async () => {
+			try {
+				const response = await fetch(
+					"http://localhost:8080/get-wishlists"
+				);
+				if (!response.ok) {
+					throw new Error("Failed to fetch wishlists");
+				}
+				const data = await response.json();
+				setWishlists(data);
+			} catch (err) {
+				setError(err.message);
+			}
+		};
+
+		fetchWishlists();
+	}, []);
+
 	const handleAddUserSubmit = async ({ uid, name }) => {
 		try {
 			const response = await fetch("http://localhost:8080/add-user", {
@@ -29,8 +51,8 @@ export default function Home() {
 
 	return (
 		<div>
-			<h1>Add User</h1>
-			<UserForm onSubmit={handleAddUserSubmit} />
+			<ViewWishlists wishlists={wishlists}></ViewWishlists>
+			<AddUserForm onSubmit={handleAddUserSubmit} />
 		</div>
 	);
 }

@@ -1,18 +1,28 @@
-// // In order to use react hooks (`useState`, `useEffect`), we must specify that this component runs on the client
-// "use client";
-// // We import react functions
-// import { useEffect, useState } from "react";
-// import { getWishlist } from "../handlers/get-wishlist";
+import { useState } from "react";
 
-// export default async function Wishlist(props) {
-// 	const [uid, setUid] = useState();
-// 	let data = await fetch("http://localhost:8080/?uid=" + uid);
-// 	let posts = await data.json();
+export default function ViewWishlists({ wishlists }) {
+	return (
+		<div>
+			<h1>Wishlists</h1>
 
-// 	return (
-// 		<div>
-// 			<p>wishlist here!</p>
-// 			{getWishlist}
-// 		</div>
-// 	);
-// }
+			<ul>
+				{wishlists.map((user) => (
+					<li key={user.userID}>
+						<h2>
+							wishlist for {user.name} (uid {user.uid})
+						</h2>
+						<ul>
+							{user.wishlist.length > 0 ? (
+								user.wishlist.map((item, index) => (
+									<li key={index}>{item}</li>
+								))
+							) : (
+								<li>No items in wishlist</li>
+							)}
+						</ul>
+					</li>
+				))}
+			</ul>
+		</div>
+	);
+}
