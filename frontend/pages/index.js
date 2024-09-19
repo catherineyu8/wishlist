@@ -1,12 +1,8 @@
 import { useState } from "react";
+import UserForm from "./components/addUserForm";
 
 export default function Home() {
-	const [uid, setUid] = useState("");
-	const [name, setName] = useState("");
-
-	const handleSubmit = async (event) => {
-		event.preventDefault();
-
+	const handleAddUserSubmit = async ({ uid, name }) => {
 		try {
 			const response = await fetch("http://localhost:8080/add-user", {
 				method: "POST",
@@ -34,31 +30,7 @@ export default function Home() {
 	return (
 		<div>
 			<h1>Add User</h1>
-			<form onSubmit={handleSubmit}>
-				<label>
-					User ID:
-					<input
-						type="text"
-						value={uid}
-						onChange={(e) => setUid(e.target.value)}
-						required
-					/>
-				</label>
-				<br />
-				<br />
-				<label>
-					Name:
-					<input
-						type="text"
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-						required
-					/>
-				</label>
-				<br />
-				<br />
-				<button type="submit">Add User</button>
-			</form>
+			<UserForm onSubmit={handleAddUserSubmit} />
 		</div>
 	);
 }

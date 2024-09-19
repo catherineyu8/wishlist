@@ -1,3 +1,5 @@
+// setup the frontend server
+
 import express from "express";
 import path from "path";
 
