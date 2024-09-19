@@ -25,19 +25,26 @@ app.get("/", async (req, res) => {
 });
 
 // API route to add a new user with an empty wishlist
+// sends json message with status and either error or success message
 app.post("/add-user", async (req, res) => {
 	try {
 		const { uid, name } = req.body;
 
 		if (!uid || !name) {
-			return res.status(400).send("Missing required fields: uid, name");
+			return res
+				.status(400)
+				.json({ error_msg: "Missing required fields: uid, name." });
 		}
 
 		addUser(uid, name);
-		res.status(200).send(`User ${userID} (${name}) added successfully.`);
+		res.status(200).json({
+			success_msg: "User added successfully.",
+		});
 	} catch (error) {
-		console.error("Error adding user: ", error);
-		res.status(500).send("Error adding user");
+		// error occurred in addUser
+		res.status(500).json({
+			error_msg: "Error adding user.",
+		});
 	}
 });
 

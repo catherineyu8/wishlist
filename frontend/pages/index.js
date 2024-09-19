@@ -1,31 +1,64 @@
-import { getWishList } from "./utils/api.js";
+import { useState } from "react";
 
 export default function Home() {
+	const [uid, setUid] = useState("");
+	const [name, setName] = useState("");
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+
+		try {
+			const response = await fetch("http://localhost:8080/add-user", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					uid: uid,
+					name: name,
+				}),
+			});
+
+			if (response.ok) {
+				const result = await response.json();
+				alert("User added successfully.");
+			} else {
+				alert("Failed to add user.");
+			}
+		} catch (error) {
+			// TODO: do something more here other than just reporting to the user???
+			alert("Error posting request to server to add user.");
+		}
+	};
+
 	return (
 		<div>
-			<p>hello!</p>
-			<title>My Wishlist</title>
-			{displayWishlist}
+			<h1>Add User</h1>
+			<form onSubmit={handleSubmit}>
+				<label>
+					User ID:
+					<input
+						type="text"
+						value={uid}
+						onChange={(e) => setUid(e.target.value)}
+						required
+					/>
+				</label>
+				<br />
+				<br />
+				<label>
+					Name:
+					<input
+						type="text"
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+						required
+					/>
+				</label>
+				<br />
+				<br />
+				<button type="submit">Add User</button>
+			</form>
 		</div>
 	);
-}
-
-// Function to display the wishlist on the frontend
-async function displayWishlist() {
-	try {
-		const wishlist = await getWishlist(); // Fetch the wishlist
-		const wishlistContainer = document.getElementById("wishlist-container");
-
-		// Clear the container first
-		wishlistContainer.innerHTML = "";
-
-		// Display each wishlist item in the container
-		wishlist.forEach((item) => {
-			const listItem = document.createElement("li");
-			listItem.textContent = item.name; // Assuming each wishlist item has a 'name' property
-			wishlistContainer.appendChild(listItem);
-		});
-	} catch (error) {
-		console.error("Error fetching the wishlist:", error);
-	}
 }
