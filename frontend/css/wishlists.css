@@ -1,0 +1,10 @@
+.wishlists {
+	display: flex; /* Use flexbox */
+	justify-content: space-between; /* Distribute space between items */
+	padding: 0; /* Remove padding */
+	list-style: none;
+}
+
+.user-wishlist li {
+	flex: 1; /* Allow each item to take equal space */
+}

@@ -1,0 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,350;1,350&family=Lora:ital,wght@0,400..700;1,400..700&family=Tenor+Sans&display=swap");
+body {
+	font-family: "Josefin Sans", sans-serif;
+	background-color: #f0f4f8;
+	margin: 0;
+	padding: 100px;
+}

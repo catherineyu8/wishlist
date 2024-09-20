@@ -7,6 +7,9 @@ export default function AddUserForm({ onSubmit }) {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		onSubmit({ uid, name });
+
+		setUid("");
+		setName("");
 	};
 
 	return (

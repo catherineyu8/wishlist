@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import AddUserForm from "./components/addUserForm";
 import ViewWishlists from "./components/viewWishlists";
 import AddItemForm from "./components/addItemForm";
+import "../css/main.css";
+import "../css/wishlists.css";
 
 export default function Home() {
 	const [wishlists, setWishlists] = useState([]);

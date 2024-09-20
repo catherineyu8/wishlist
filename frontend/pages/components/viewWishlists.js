@@ -5,22 +5,20 @@ export default function ViewWishlists({ wishlists }) {
 		<div>
 			<h1>Wishlists</h1>
 
-			<ul>
+			<ul class="wishlists">
 				{wishlists.map((user) => (
-					<li key={user.userID}>
+					<ul class="user-wishlist" key={user.uid}>
 						<h2>
 							wishlist for {user.name} (uid {user.uid})
 						</h2>
-						<ul>
-							{user.wishlist.length > 0 ? (
-								user.wishlist.map((item, index) => (
-									<li key={index}>{item}</li>
-								))
-							) : (
-								<li>No items in wishlist</li>
-							)}
-						</ul>
-					</li>
+						{user.wishlist.length > 0 ? (
+							user.wishlist.map((item, index) => (
+								<li key={index}>{item}</li>
+							))
+						) : (
+							<li>No items in wishlist</li>
+						)}
+					</ul>
 				))}
 			</ul>
 		</div>

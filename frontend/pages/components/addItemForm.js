@@ -7,6 +7,9 @@ export default function AddItemForm({ onSubmit }) {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		onSubmit({ uid, item });
+
+		setUid("");
+		setItem("");
 	};
 
 	return (
