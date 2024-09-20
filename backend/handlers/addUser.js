@@ -4,8 +4,6 @@ import { db } from "../firebase.js"; // Import the db instance
 
 // Function to add a new user with a wishlist
 export default async function addUser(uid, name) {
-	// TODO: add try/catch block here and console.log the error?
-
 	// Create a reference to the "users" collection and the specific user document
 	const userDocRef = doc(collection(db, "users"), uid);
 

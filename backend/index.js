@@ -6,6 +6,7 @@ import { db } from "./firebase.js";
 import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 import addUser from "./handlers/addUser.js";
 import getWishlist from "./handlers/getWishlist.js";
+import addItem from "./handlers/addItem.js";
 
 dotenv.config();
 
@@ -60,7 +61,28 @@ app.post("/add-user", async (req, res) => {
 	}
 });
 
-// TODO: API route for adding item for a uid
+app.post("/add-item", async (req, res) => {
+	try {
+		const { uid, item } = req.body;
+
+		if (!uid || !item) {
+			// halt execution if fields not provided
+			return res
+				.status(400)
+				.json({ error_msg: "Missing required fields: uid, item." });
+		}
+
+		await addItem(uid, item);
+		res.status(200).json({
+			success_msg: "Item added successfully.",
+		});
+	} catch (error) {
+		// error occurred in addUser
+		res.status(500).json({
+			error_msg: "Error adding item.",
+		});
+	}
+});
 
 // start the backend server
 function start() {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AddUserForm from "./components/addUserForm";
 import ViewWishlists from "./components/viewWishlists";
+import AddItemForm from "./components/addItemForm";
 
 export default function Home() {
 	const [wishlists, setWishlists] = useState([]);
@@ -53,10 +54,39 @@ export default function Home() {
 		}
 	};
 
+	const handleAddItemSubmit = async ({ uid, item }) => {
+		try {
+			const response = await fetch("http://localhost:8080/add-item", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					uid: uid,
+					item: item,
+				}),
+			});
+
+			if (response.ok) {
+				// success code from server
+				// const result = await response.json();
+				alert("Item added successfully.");
+			} else {
+				// error code from server
+
+				alert("Failed to add item.");
+			}
+		} catch (error) {
+			// network or other unexpected error
+			setError(err.message);
+		}
+	};
+
 	return (
 		<div>
 			<ViewWishlists wishlists={wishlists}></ViewWishlists>
 			<AddUserForm onSubmit={handleAddUserSubmit} />
+			<AddItemForm onSubmit={handleAddItemSubmit} />
 		</div>
 	);
 }
